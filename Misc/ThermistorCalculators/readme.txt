@@ -1,0 +1,1 @@
+original link: http://www.daycounter.com/Calculators/Steinhart-Hart-Thermistor-Calculator.phtml

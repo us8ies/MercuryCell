@@ -1,0 +1,155 @@
+	body {  
+		font-family: Arial;
+		topmargin: 0;
+		leftmargin: 0
+	} 
+	
+	.centered { vertical-align:middle; text-align:center; }
+	.centered img { display:block; margin:0 auto; }
+	
+	div.form_note {
+		display: inline; /* otherwise the default "block" gives you a line break */
+		font-size: small;
+	}
+	
+	div.form_label {
+		display: inline; /* otherwise the default "block" gives you a line break */
+		font-size: small;
+		font-weight: bold;
+	}	
+	
+	div.error {
+		display: inline; /* otherwise the default "block" gives you a line break */
+		color: red;
+	}	
+	
+	p.form_heading {
+		font-size: large;
+		font-weight: bold;
+		text-align: center;
+	}
+	
+	p.error {
+		color: red;
+		font-weight: bold;
+	}
+
+
+	p.form_label {
+		font-size: small;
+		font-weight: bold;
+	}	
+
+
+
+	table.form_table {
+		background-color: #EEFFFF;
+	}
+	
+
+		
+
+/* main table cell padding*/
+td.main_top_left {				/*top*/
+    padding-right: 5px;
+    padding-left: 5px;
+}
+td.main_top_center {
+    padding-right: 20px;
+	width:	720px;
+}
+td.main_top_right {
+    padding-right: 20px;
+}
+td.main_center_left {			/*center*/
+    padding-right: 20px;
+	vertical-align: top;
+}
+td.main_center_center {
+    padding-right: 20px;
+	width:	720px;
+}
+td.main_center_right {
+    padding-right: 20px;
+}
+
+td.main_bottom_left {			/*bottom*/
+    padding-right: 20px;
+}
+td.main_bottom_center {
+    padding-right: 20px;
+	width:	720px;
+}
+td.main_bottom_right {
+    padding-right: 20px;
+}
+
+p.banner_heading {
+	color: #000000;
+	font-weight: bold;
+	font-size: 32px;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+p.banner_sub_heading {
+	color: #000000;
+	font-style: italic;
+	font-size: 25px;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+h2.page_heading {
+	font-style: italic;
+	font-size: large;
+	font-weight: bold;
+}
+
+div.menu_heading {
+	font-style: italic;
+	display: inline; /* otherwise the default "block" gives you a line break */
+	/*font-size: small;*/
+	font-weight: bold;
+	color: white;
+}
+
+
+p.menu {
+	font-size: small;
+	font-weight: bold;
+}
+
+div.menu {
+	display: inline; /* otherwise the default "block" gives you a line break */
+	font-size: small;
+	font-weight: bold;
+}
+
+td.menu {			/*6 columns for each of the main menus*/
+	padding-top: 5px;
+	padding-bottom: 5px;
+    vertical-align: center;
+	text-align: center;
+	background-color: #00CCFF;
+}
+
+	A.menu:link { text-decoration: none; color: #FFFFFF}
+	A.menu:active { text-decoration: none; color: #FFFFFF}
+	A.menu:visited { text-decoration: none; color: #FFFFFF} 
+	A.menu:hover {text-decoration: underline; color: #000000}
+	
+	A.capmenu:link { text-decoration: none; color: #000000}
+	A.capmenu:active { text-decoration: none; color: #000000}
+	A.capmenu:visited { text-decoration: none; color: #000000} 
+	A.capmenu:hover {text-decoration: underline; color: #FF0000}	
+	
+	A.link:link { text-decoration: none; color: #000000}
+	A.link:active { text-decoration: none; color: #000000}
+	A.link:visited { text-decoration: none; color: #000000} 
+	A.link:hover {text-decoration: none; color: #FF8080}	
+	
+	A.hide:link { text-decoration: none; color: #000000}
+	A.hide:active { text-decoration: none; color: #000000}
+	A.hide:visited { text-decoration: none; color: #000000} 
+	A.hide:hover {text-decoration: none; color: #000000}		

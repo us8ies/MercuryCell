@@ -1,0 +1,740 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+<link rel="stylesheet" href="Steinhart-Hart%20Thermistor%20Calculator_files/DaycounterStyle.css">
+
+<meta name="description" content="Air Core Coil Inductor Inductance Calculator.">
+
+<meta name="keywords" content="Air, Core,Coil,Inductance, Inductor, Electronics, Calculator">
+				                  
+				                  
+<title>Steinhart-Hart Thermistor Calculator</title>
+
+<script async="" src="Steinhart-Hart%20Thermistor%20Calculator_files/analytics.js"></script><script language="JavaScript">
+
+
+function ComputeT(form) { 	
+	with(Math) {
+		var Precision= 5;
+		
+		var A= Number(form.A.value);
+		var B= Number(form.B.value);
+		var C= Number(form.C.value);
+		var D= Number(form.D.value);
+		var R= Number(form.R.value);
+		var Rt= Number(form.Rt.value);
+
+		var lr= log(R/Rt);
+		T= 1/(A+ B*lr+ C*lr*lr+ D*lr*lr*lr);
+		T-= 273.15;
+
+		form.T.value= T.toPrecision(Precision);
+	}
+}
+
+
+function ComputeR(form) { 	
+	with(Math) {
+		var Precision= 5;
+		
+		var A= Number(form.A.value);
+		var B= Number(form.B.value);
+		var C= Number(form.C.value);
+		var D= Number(form.D.value);
+		var T= Number(form.T.value);
+		var Rt= Number(form.Rt.value);
+		var R;
+		
+		T+= 273.15;		// convert to Kelvin
+		
+		if(form.Extended.checked) {
+			R= Rt*exp(A + (B/T)+ (C/(T*T))  + (D/(T*T*T)) );
+		} else {
+			R= Rt*exp(A + (B/T)+ (D/(T*T*T)) );
+		}
+
+		form.R.value= R.toPrecision(Precision);
+	}
+}
+
+
+function ComputeR_Beta(form) { 	
+	with(Math) {
+		var Precision= 5;
+		
+		var B= Number(form.B.value);
+		var T1= Number(form.T1.value)+273.15;
+		var T2= Number(form.T2.value)+273.15;
+		var R1= Number(form.R1.value);
+
+		var R2;
+
+		R2 = R1 / (exp(B*( 1/T1 - 1/T2 )));
+
+		form.R2.value= R2.toPrecision(Precision);
+	}
+}
+
+function ComputeT_Beta(form) { 	
+	with(Math) {
+		var Precision= 5;
+		
+		var B= Number(form.B.value);
+		var T1= Number(form.T1.value)+273.15;
+		var R1= Number(form.R1.value);
+		var R2= Number(form.R2.value);
+		
+		var T2;
+		var X;
+
+		X= B/log(R1/R2);
+		T2= X*T1/(X-T1);
+		
+		T2-= 273.15;
+
+		form.T2.value= T2.toPrecision(Precision);
+	}
+}
+
+function ComputeBeta(form) { 	
+	with(Math) {
+		var Precision= 5;
+
+		var T1= Number(form.T1.value)  +273.15;		
+		var T2= Number(form.T2.value)  +273.15;
+		var TA=  Number(form.TA.value)  +273.15;
+		var R1= Number(form.R1.value);
+		var R2= Number(form.R2.value);
+		
+		var B;
+		var A;
+		
+		B= T1*T2/(T2-T1)*log(R1/R2);
+		A= -B*100/(TA*TA);
+
+		form.B.value= B.toPrecision(Precision);
+		form.A.value= A.toPrecision(Precision);
+		
+	}
+}
+
+function ComputeDeviation(form) { 	
+	with(Math) {
+		var Precision= 5;
+
+		var TA= Number(form.TA.value) +273.15;		
+		var dB= Number(form.dB.value);		
+		var A= Number(form.A.value);
+		var dR25=  Number(form.dR25.value);
+		var B=  Number(form.B.value);
+				
+		var dR;
+		var dT;
+		var val= form.TA.value;
+		
+		if(Number(form.TA.value)!=0) {
+			A= B/(TA*TA)*100;
+			form.A.value= A.toPrecision(Precision);
+		}
+		
+		dR= ( (1+dB/100)*(1+dR25/100) - 1 )*100;
+		dT= dR/A;
+
+		form.dR.value= dR.toPrecision(Precision);
+		form.dT.value= dT.toPrecision(Precision);
+		
+	}
+}
+
+
+</script>
+
+
+
+
+</head>
+
+<body topmargin="0" leftmargin="0">
+
+<table width="820" border="0">
+  <tbody><tr>
+    <td width="100" valign="middle" align="center" height="115">
+    <img src="Steinhart-Hart%20Thermistor%20Calculator_files/DaycounterLogo3.gif" alt="Electronics, PCB Design and PCB Layout" width="66" border="0" height="107">
+    </td>
+    <td colspan="8" width="650" background="Steinhart-Hart%20Thermistor%20Calculator_files/BoardFade.jpg" height="115"><b><font size="6" face="Arial">Daycounter,
+      Inc.</font><font size="5"><br>
+      </font></b><font size="5"><font face="Arial"><i>Engineering Services</i></font></font>
+      <p><i><font size="2" face="Arial"><b><a href="http://www.daycounter.com/" class="link">Custom Firmware, Electronics
+      Design</a>, <a href="http://www.layoutonly.com/" class="link">
+      and PCB Layout</a></b></font></i></p>
+    </td>
+    <td width="27" height="115"></td>
+  </tr>
+      <tr>
+    <td class="menu" width="100"></td>
+    <td class="menu"><div class="menu"><a href="http://www.daycounter.com/" class="menu">Home</a></div></td>
+    <td class="menu"><div class="menu"><a href="http://www.daycounter.com/Company.phtml" class="menu">Company</a></div></td>
+    <td class="menu"><div class="menu"><a href="http://www.daycounter.com/Services.phtml" class="menu">Services</a></div></td>
+    <td class="menu"><div class="menu"><a href="http://www.daycounter.com/Products.phtml" class="menu">Products</a></div></td>
+    <td class="menu"><div class="menu"><a href="http://www.daycounter.com/Partners.phtml" class="menu">Partners</a></div></td>
+    <td class="menu"><div class="menu"><a href="http://www.daycounter.com/Clients.phtml" class="menu">Clients</a></div></td>
+    <td class="menu"><div class="menu"><a href="http://www.daycounter.com/SiteMap.phtml" class="menu">Site Map</a></div></td>
+    <td class="menu"><div class="menu"><a href="http://www.daycounter.com/Contact.phtml" class="menu">Contact Us</a></div></td>
+</tr>
+  <tr>
+    <td width="100">&nbsp;</td>
+    <td width="86" valign="middle" align="center">&nbsp;</td>
+    <td width="86" valign="middle" align="center">&nbsp;</td>
+    <td width="86" valign="middle" align="center">&nbsp;</td>
+    <td width="86" valign="middle" align="center">&nbsp;</td>
+    <td width="86" valign="middle" align="center">&nbsp;</td>
+    <td width="86" valign="middle" align="center">&nbsp;</td>
+    <td width="86" valign="middle" align="center">&nbsp;</td>
+    <td width="87" valign="middle" align="center" height="10">&nbsp;</td>
+    <td width="27" height="10"></td>
+  </tr>
+</tbody></table>
+<table width="820" border="0">
+  <tbody><tr>
+    <td width="200" valign="top" align="left" height="540">
+		
+      <br><br>
+
+<a href="http://www.vegetronix.com/Products/AquaPlumb">
+<img src="Steinhart-Hart%20Thermistor%20Calculator_files/Water-Level-Sensor.png" alt="Water Level Sensor" border="0">
+
+	<br><br><br><br>
+	
+	
+	
+	  <script async="" src="Steinhart-Hart%20Thermistor%20Calculator_files/adsbygoogle.js"></script>
+<!-- Skyscraper Text -->
+<ins class="adsbygoogle" style="display:inline-block;width:300px;height:600px" data-ad-client="ca-pub-1155302517384345" data-ad-slot="2649549513"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+	<br><br><br><br>
+	
+	
+	
+	  <script async="" src="Steinhart-Hart%20Thermistor%20Calculator_files/adsbygoogle.js"></script>
+<!-- Skyscraper Text -->
+<ins class="adsbygoogle" style="display:inline-block;width:300px;height:600px" data-ad-client="ca-pub-1155302517384345" data-ad-slot="2649549513"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+
+      <img src="Steinhart-Hart%20Thermistor%20Calculator_files/GB4000Small.jpg" width="200" border="0" align="right" height="176"></a></td>
+    <td width="5" valign="top" align="left" height="540"></td>
+    <td width="600" valign="top" align="left" height="540"><p><b><font size="3" face="Arial">
+      Steinhart-Hart Thermistor Calculator<br>
+      </font></b><img src="Steinhart-Hart%20Thermistor%20Calculator_files/OrangeDivider.jpg" width="520" border="0" height="2"></p>
+      <p><font face="Arial">See our other <a href="http://www.daycounter.com/Calculators/">Electronics
+      Calculators</a>.</font></p>
+      <h4><font face="Arial">
+      Steinhart-Hart Temperature Calculator</font></h4>
+      <p><font size="3" face="Arial">Thermistor resistance is&nbsp; related to
+      temperature in degrees Kelvin by the following formula:</font></p>
+      <p><font face="Arial">1/T= A + B*ln(R/Rt) + C*ln(R/Rt)<sup>2 + </sup>D*ln(R/Rt)<sup>3</sup></font></p>
+      <p><font size="3" face="Arial">In the standard Steinhart-Hart equation the
+      C parameter is set to zero.&nbsp; However, some manufacturers use all 4 coefficients.&nbsp;
+      In the calculator below, you can specify whether to use this term or not,
+      by just setting it to zero.&nbsp;</font></p>
+      <p><font face="Arial">Subtract 273.15 to convert Kelvin to Celsius.&nbsp;</font></p>
+      <p><font face="Arial">It's wise to do a quick sanity check by putting in
+      the coefficients and the same value for Rt and R.&nbsp; If the result
+      isn't 25C then there is a problem with the coefficients.&nbsp;</font></p>
+      <form method="POST" name="ParamForm1">
+        <table width="583" border="1">
+          <tbody><tr>
+            <td colspan="2" width="573"><b><font size="3" face="Arial">Inputs:</font></b></td>
+          </tr>
+          <tr>
+            <td width="289"><font size="3" face="Arial">Coefficient A&nbsp;</font><font size="3" face="Arial">(K</font><font size="2" face="Arial"><sup>-0</sup></font><font size="3" face="Arial">)</font></td>
+            <td width="290"><font size="3" face="Arial"><input name="A" size="17" type="text">
+              </font></td>
+          </tr>
+          <tr>
+            <td width="289"><font size="3" face="Arial">Coefficient B&nbsp;</font><font size="3" face="Arial">(K</font><font size="2" face="Arial"><sup>-1</sup></font><font size="3" face="Arial">)</font></td>
+            <td width="290"><font size="3" face="Arial"><input name="B" size="17" type="text">
+              </font></td>
+          </tr>
+          <tr>
+            <td width="289"><font size="3" face="Arial">Coefficient C&nbsp;(K</font><font size="2" face="Arial"><sup>-2</sup></font><font size="3" face="Arial">)</font></td>
+            <td width="290"><font size="3" face="Arial"><input name="C" size="17" value="0" type="text">
+              </font></td>
+          </tr>
+          <tr>
+            <td width="289"><font size="3" face="Arial">Coefficient D&nbsp;</font><font size="3" face="Arial">(K</font><font size="2" face="Arial"><sup>-3</sup></font><font size="3" face="Arial">)</font></td>
+            <td width="290"><font size="3" face="Arial"><input name="D" size="17" type="text">
+              </font></td>
+          </tr>
+          <tr>
+            <td width="289"><font face="Arial">Resistance at ambient temperature
+              Rt</font></td>
+            <td width="290"><font size="3" face="Arial"><input name="Rt" size="17" type="text">
+              (ohms)</font></td>
+          </tr>
+          <tr>
+            <td width="289"><font face="Arial">Measured resistance at T</font></td>
+            <td width="290"><font size="3" face="Arial"><input name="R" size="17" type="text">
+              (ohms)</font></td>
+          </tr>
+          <tr>
+            <td colspan="2" width="573">
+              <p align="center"><input value="Compute" name="B2" onclick="ComputeT(document.ParamForm1);" type="button"></p></td>
+          </tr>
+          <tr>
+            <td colspan="2" width="573"><b><font size="3" face="Arial">Results:</font></b></td>
+          </tr>
+          <tr>
+            <td width="289"><font size="3" face="Arial">Temperature</font></td>
+            <td width="290"><font size="3" face="Arial">
+              <input name="T" size="17" type="text"> 
+              &nbsp;(C)</font></td>
+          </tr>
+        </tbody></table>
+      </form>
+      <p><font face="Arial">The coefficients A, B, C are specified over a range of
+      temperatures.&nbsp; Many times manufactures neglect to put these
+      parameters on a data sheet, and so they must be computed by solving 3
+      simultaneous equations.&nbsp; The more narrow the temperature range, the
+      greater the accuracy will be.&nbsp; Note that the equation is extremely
+      accurate for individual thermistors which have their ABC coefficients
+      individually determined.&nbsp; However, for a group of thermistors, the
+      resulting temperature can be off due to variances in the lot.&nbsp; The
+      data sheet should specify the tolerance in %C.&nbsp;</font></p>
+      <h4><font face="Arial">
+      Steinhart-Hart Resistance Calculator</font></h4>
+      <p><font size="3" face="Arial">We can figure out the resistance at a given temperature using the
+      inverse of the above equation:</font></p>
+      <p><font size="3" face="Arial">R= Rt*exp(A<sub>1</sub>+B<sub>1</sub>/T+C<sub>1</sub>/T<sup>2</sup>+D<sub>1</sub>/T<sup>3</sup>),&nbsp;</font></p>
+      <p><font face="Arial">where exp is the inverse of ln the natural
+      log.&nbsp;</font></p>
+      <p><font face="Arial">Note that the values for A<font size="2"><sub>1</sub></font>,B<font size="2"><sub>1</sub></font>,C<font size="2"><sub>1</sub></font>,D<sub><font size="2">1</font> </sub> are different than
+      the coefficients for the equation above!</font></p>
+      <p><font face="Arial">This calculator will compute a resistance. Note that
+      you can choose whether or not to use the third term, be selecting the
+      check box.&nbsp;</font></p>
+      <form method="POST" name="ParamForm2">
+        <table width="583" border="1">
+          <tbody><tr>
+            <td colspan="2" width="573"><b><font size="3" face="Arial">Inputs:</font></b></td>
+          </tr>
+          <tr>
+            <td width="289"><font size="3" face="Arial">Coefficient A</font><font face="Arial"><font size="2"><sub>1</sub></font></font><font size="3" face="Arial">
+              (K</font><font size="2" face="Arial"><sup>0</sup></font><font size="3" face="Arial">)</font></td>
+            <td width="290"><font size="3" face="Arial"><input name="A" size="17" type="text">
+              </font></td>
+          </tr>
+          <tr>
+            <td width="289"><font size="3" face="Arial">Coefficient B</font><font face="Arial"><font size="2"><sub>1</sub></font></font><font size="3" face="Arial">
+              (K</font><font size="2" face="Arial"><sup>1</sup></font><font size="3" face="Arial">)</font></td>
+            <td width="290"><font size="3" face="Arial"><input name="B" size="17" type="text">
+              </font></td>
+          </tr>
+          <tr>
+            <td width="289"><font size="3" face="Arial">Coefficient C</font><font face="Arial"><font size="2"><sub>1</sub></font></font><font size="3" face="Arial">
+              (K</font><font size="2" face="Arial"><sup>2</sup></font><font size="3" face="Arial">)</font></td>
+            <td width="290"><font size="3" face="Arial"><input name="C" size="17" type="text">
+              <input name="Extended" value="ON" type="checkbox"></font><font size="2" face="Arial">Use
+              this coefficient</font></td>
+          </tr>
+          <tr>
+            <td width="289"><font size="3" face="Arial">Coefficient D</font><font face="Arial"><font size="2"><sub>1</sub></font></font><font size="3" face="Arial">
+              (K</font><font size="2" face="Arial"><sup>3</sup></font><font size="3" face="Arial">)</font></td>
+            <td width="290"><font size="3" face="Arial"><input name="D" size="17" type="text">
+              </font></td>
+          </tr>
+          <tr>
+            <td width="289"><font face="Arial">Resistance at ambient temperature
+              Rt</font></td>
+            <td width="290"><font size="3" face="Arial"><input name="Rt" size="17" type="text">
+              (ohms)</font></td>
+          </tr>
+          <tr>
+            <td width="289"><font face="Arial">T</font></td>
+            <td width="290"><font size="3" face="Arial"><input name="T" size="17" type="text">&nbsp;
+              (C)</font></td>
+          </tr>
+          <tr>
+            <td colspan="2" width="573">
+              <p align="center"><input value="Compute" name="B2" onclick="ComputeR(document.ParamForm2);" type="button"></p></td>
+          </tr>
+          <tr>
+            <td colspan="2" width="573"><b><font size="3" face="Arial">Results:</font></b></td>
+          </tr>
+          <tr>
+            <td width="289"><font size="3" face="Arial">Resistance at T</font></td>
+            <td width="290"><font size="3" face="Arial">
+              <input name="R" size="17" type="text"> 
+              (ohms)</font></td>
+          </tr>
+        </tbody></table>
+      </form>
+
+      <p>I<font face="Arial">t's wise to do a quick sanity check by putting in
+      the coefficients, and 25C for the temperature, the resultant resistance
+      should be close to Rt.&nbsp;</font></p>
+      <h4><font face="Arial">Beta and Alpha Parameters</font></h4>
+      <p><font face="Arial">Most manufacturers will specify alpha and beta, and
+      the R tolerance at the ambient temperature. Beta is temperature dependent,
+      and is specified between two
+      temperature points, and can be used to calculate Temperature between the
+      specified temperatures, with a rated accuracy.&nbsp;&nbsp;For example, for
+      a beta specified between 25 and 85 it will often be denoted as B<font size="1"><sub>25/85</sub></font>.
+      Alpha the temperature coefficient is often denoted as TCR on datasheets.&nbsp;
+      Alpha is negative for NTC thermistors and positive for PTC thermistors.</font></p>
+      <p><font face="Arial">Beta is defined as follows:</font></p>
+      <p><font face="Arial">B<font size="2"><sub>T1/T2</sub></font>= 1/(1/T<font size="2"><sub>1</sub></font>-1/T<font size="2"><sub>2</sub></font>)ln(R<font size="2"><sub>1</sub></font>/R<font size="2"><sub>2</sub></font>)&nbsp;&nbsp;
+      (Kelvin)</font></p>
+      <p><font face="Arial">Thus to calculate R2 you can use this formula:</font></p>
+      <p><font face="Arial">R2 = R1 / (exp( B*(1/ T1 - 1/ T2) ))</font></p>
+      <p>&nbsp;</p>
+      <form method="POST" name="ParamForm3">
+        <table width="100%" border="1">
+          <tbody><tr>
+            <td colspan="2" width="573" height="19"><b><font size="3" face="Arial">Inputs:</font></b></td>
+          </tr>
+          <tr>
+            <td width="289" height="23"><font size="3" face="Arial">Beta B</font></td>
+            <td width="290" height="23"><font size="3" face="Arial"><input name="B" size="17" type="text">
+              </font></td>
+          </tr>
+          <tr>
+            <td width="289" height="17"><font face="Arial">R1</font></td>
+            <td width="290" height="17"><font size="3" face="Arial"><input name="R1" size="17" type="text">
+              (ohms)
+              </font></td>
+          </tr>
+          <tr>
+            <td width="289" height="23"><font face="Arial">T1</font></td>
+            <td width="290" height="23"><font size="3" face="Arial"><input name="T1" size="17" type="text">
+              (C)</font></td>
+          </tr>
+          <tr>
+            <td width="289" height="23"><font face="Arial">T2</font></td>
+            <td width="290" height="23"><font size="3" face="Arial"><input name="T2" size="17" type="text">
+              (C)
+              </font></td>
+          </tr>
+          <tr>
+            <td colspan="2" width="573" height="25">
+              <p align="center"><input value="Compute" name="B2" onclick="ComputeR_Beta(document.ParamForm3);" type="button"></p></td>
+          </tr>
+          <tr>
+            <td colspan="2" width="573" height="19"><b><font size="3" face="Arial">Results:</font></b></td>
+          </tr>
+          <tr>
+            <td width="289" height="23"><font size="3" face="Arial">R2</font></td>
+            <td width="290" height="23"><font size="3" face="Arial">
+              <input name="R2" size="17" type="text"> 
+              (ohms)</font></td>
+          </tr>
+        </tbody></table>
+      </form>
+      <p><font face="Arial">Likewise, we can compute a temperature for a measured
+      resistance:</font></p>
+      <p><font face="Arial">T<font size="2"><sub>2</sub></font>= T<font size="2"><sub>1</sub></font>*B/ln(R<font size="2"><sub>1</sub></font>/R<font size="2"><sub>2</sub></font>)&nbsp;
+      /&nbsp; ( B/ln(R<font size="2"><sub>1</sub></font>/R<font size="2"><sub>2</sub></font>)
+      - T<font size="2"><sub>1</sub></font> )&nbsp; , Note that T has units of Kelvin. </font></p>
+      <form method="POST" name="ParamForm4">
+        <table width="100%" border="1">
+          <tbody><tr>
+            <td colspan="2" width="573" height="19"><b><font size="3" face="Arial">Inputs:</font></b></td>
+          </tr>
+          <tr>
+            <td width="289" height="23"><font size="3" face="Arial">Beta B</font></td>
+            <td width="290" height="23"><font size="3" face="Arial"><input name="B" size="17" type="text">
+              </font></td>
+          </tr>
+          <tr>
+            <td width="289" height="17"><font face="Arial">R1</font></td>
+            <td width="290" height="17"><font size="3" face="Arial"><input name="R1" size="17" type="text">
+              (ohms)
+              </font></td>
+          </tr>
+          <tr>
+            <td width="289" height="23"><font face="Arial">R2</font></td>
+            <td width="290" height="23"><font size="3" face="Arial"><input name="R2" size="17" type="text">
+              (ohms)</font></td>
+          </tr>
+          <tr>
+            <td width="289" height="23"><font face="Arial">T1</font></td>
+            <td width="290" height="23"><font size="3" face="Arial"><input name="T1" size="17" type="text">
+              (C)
+              </font></td>
+          </tr>
+          <tr>
+            <td colspan="2" width="573" height="25">
+              <p align="center"><input value="Compute" name="B2" onclick="ComputeT_Beta(document.ParamForm4);" type="button"></p></td>
+          </tr>
+          <tr>
+            <td colspan="2" width="573" height="19"><b><font size="3" face="Arial">Results:</font></b></td>
+          </tr>
+          <tr>
+            <td width="289" height="23"><font size="3" face="Arial">T2</font></td>
+            <td width="290" height="23"><font size="3" face="Arial">
+              <input name="T2" size="17" type="text"> 
+              (C)</font></td>
+          </tr>
+        </tbody></table>
+      </form>
+
+      <p><font face="Arial">Alpha can be approximated from Beta as follows:</font></p>
+      <p><font face="Arial">Alpha= -B/T<font size="2"><sup>2</sup></font> *100</font></p>
+
+      <form method="POST" name="ParamForm5">
+        <table width="100%" border="1">
+          <tbody><tr>
+            <td colspan="2" width="573" height="19"><b><font size="3" face="Arial">Inputs:</font></b></td>
+          </tr>
+          <tr>
+            <td width="289" height="17"><font face="Arial">R1</font></td>
+            <td width="290" height="17"><font size="3" face="Arial"><input name="R1" size="17" type="text">
+              (ohms)
+              </font></td>
+          </tr>
+          <tr>
+            <td width="289" height="23"><font face="Arial">R2</font></td>
+            <td width="290" height="23"><font size="3" face="Arial"><input name="R2" size="17" type="text">
+              (ohms)</font></td>
+          </tr>
+          <tr>
+            <td width="289" height="23"><font face="Arial">T1</font></td>
+            <td width="290" height="23"><font size="3" face="Arial"><input name="T1" size="17" type="text">
+              (C)
+              </font></td>
+          </tr>
+          <tr>
+            <td width="289" height="23"><font size="3" face="Arial">T2</font></td>
+            <td width="290" height="23"><font size="3" face="Arial">
+              <input name="T2" size="17" type="text"> 
+              (C)</font></td>
+          </tr>
+          <tr>
+            <td width="289" height="23"><font size="3" face="Arial">T for
+              calculating Alpha.&nbsp;<br>
+              </font><font size="2" face="Arial">(optional for calculating B)</font></td>
+            <td width="290" height="23"><font size="3" face="Arial">
+              <input name="TA" size="17" value="0" type="text"> 
+              (C)&nbsp;</font></td>
+          </tr>
+          <tr>
+            <td colspan="2" width="573" height="25">
+              <p align="center"><input value="Compute" name="B2" onclick="ComputeBeta(document.ParamForm5);" type="button"></p></td>
+          </tr>
+          <tr>
+            <td colspan="2" width="573" height="19"><b><font size="3" face="Arial">Results:</font></b></td>
+          </tr>
+          <tr>
+            <td width="289" height="23"><font size="3" face="Arial">Beta B</font></td>
+            <td width="290" height="23"><font size="3" face="Arial"><input name="B" size="17" type="text">
+              (K)
+              </font></td>
+          </tr>
+          <tr>
+            <td width="289" height="23"><font size="3" face="Arial">Aproximate
+              Alpha (TCR)</font></td>
+            <td width="290" height="23"><font size="3" face="Arial"><input name="A" size="17" type="text">
+              (%/C)</font></td>
+          </tr>
+        </tbody></table>
+      </form>
+
+      <h4><font face="Arial">Thermal Time Constant</font></h4>
+      <p><font face="Arial">The thermal time constant is a measure of how fast
+      the thermistor can adapt to temperature changes.&nbsp; If you want to
+      measure quick changes in temperature, then a small time constant becomes
+      important.&nbsp;&nbsp;</font></p>
+      <p><font face="Arial"><b>Temperature Deviation</b></font></p>
+      <p><font face="Arial">Knowing the end accuracy of a family of thermistors
+      can be challenging given the multitudes of parameters on a
+      datasheet.&nbsp; The first calculation is the total resistance deviation:</font></p>
+      <p><font face="Arial">Delta(R)= [(1+Delta(R<font size="2"><sub>T25</sub></font>))/100)*(1+Delta(B)/100)
+      - 1]*100&nbsp;&nbsp;&nbsp;&nbsp; (%)</font></p>
+      <p><font face="Arial">Where Delta represents the tolerance in %.</font></p>
+      <p><font face="Arial">If we know the Delta(R) at a given temperature, we
+      can use alpha (TCR the temperature coefficient) to figure out the
+      temperature deviation:</font></p>
+      <p><font face="Arial">Delta(T)= Delta(R) / min(Alpha).</font></p>
+      
+      <p><font face="Arial">Note that alpha is inversely proportional to
+      temperature.&nbsp; So we get maximum deviation when alpha is selected at
+      the highest temperature in the range.&nbsp; From the equation above we can
+      estimate alpha from B at a given temperature.&nbsp;&nbsp;</font></p>
+      
+      <form method="POST" name="ParamForm6">
+        <table width="100%" border="1">
+          <tbody><tr>
+            <td colspan="2" width="573" height="19"><b><font size="3" face="Arial">Inputs:</font></b></td>
+          </tr>
+          <tr>
+            <td width="289" height="17"><font face="Arial"> Beta</font></td>
+            <td width="290" height="17"><font size="3" face="Arial"><input name="B" size="17" type="text">
+              (K)
+              </font></td>
+          </tr>
+          <tr>
+            <td width="289" height="17"><font face="Arial">Delta(Beta): Beta
+              tolerance</font></td>
+            <td width="290" height="17"><font size="3" face="Arial"><input name="dB" size="17" type="text">
+              (%)
+              </font></td>
+          </tr>
+          <tr>
+            <td width="289" height="23"><font face="Arial">Delta(R<font size="2"><sub>T25</sub></font>):
+              R<font size="2"><sub>T25</sub></font> tolerance</font></td>
+            <td width="290" height="23"><font size="3" face="Arial"><input name="dR25" size="17" type="text">
+              (%)</font></td>
+          </tr>
+          <tr>
+            <td width="289" height="23"><font size="3" face="Arial">
+              Min
+              Alpha (TCR),&nbsp;&nbsp;&nbsp;&nbsp;</font></td>
+            <td width="290" height="23"><font size="3" face="Arial"><input name="A" size="17" type="text">
+              (%/C)
+              </font></td>
+          </tr>
+          <tr>
+            <td width="289" height="23"><font size="3" face="Arial"><b>OR </b>Estimate
+              Alpha at Temperature&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</font></td>
+            <td width="290" height="23"><font size="3" face="Arial"><input name="TA" size="17" type="text">
+              (C)
+              </font></td>
+          </tr>
+          <tr>
+            <td colspan="2" width="573" height="25">
+              <p align="center"><input value="Compute" name="B2" onclick="ComputeDeviation(document.ParamForm6);" type="button"></p></td>
+          </tr>
+          <tr>
+            <td colspan="2" width="573" height="19"><b><font size="3" face="Arial">Results:</font></b></td>
+          </tr>
+          <tr>
+            <td width="289" height="23"><font size="3" face="Arial">Delta (R)
+              Resistance tolerance</font></td>
+            <td width="290" height="23"><font size="3" face="Arial"><input name="dR" size="17" type="text">
+              (ohms)
+              </font></td>
+          </tr>
+          <tr>
+            <td width="289" height="23"><font size="3" face="Arial">Delta (T)
+              Temperature </font><font face="Arial">tolerance</font></td>
+            <td width="290" height="23"><font size="3" face="Arial"><input name="dT" size="17" type="text">
+              (%/C)</font></td>
+          </tr>
+        </tbody></table>
+      </form>
+      
+      <p>&nbsp;</p>
+      <p>&nbsp;</p>
+      <h4><font face="Arial">Manufacturer Links</font></h4>
+      <p><font face="Arial">The best way to find electronic parts is to use our
+      free <a href="http://www.daycounter.com/Manufacturers/Electronic-Component-Directory.phtml">Electronics
+      Component Directory</a>, where a myriad of electronics manufactures are
+      listed.</font></p>
+      <h4 align="left"><font face="Arial">Other Electronics Links</font></h4>
+      <p align="left"><font face="Arial">We offer a broad range of <a href="http://www.daycounter.com/Calculators">electrical
+      engineering calculators</a> and <a href="http://www.daycounter.com/Articles">electronics
+      articles and tutorials</a>.&nbsp;</font>
+      </p><p align="left"><font size="3" face="Arial">Daycounter specializes in
+      contract electronics design.&nbsp; Do you need some help on your project?&nbsp;
+      <a href="http://www.daycounter.com/Contact.phtml">Contact us</a> to get a
+      quote.</font></p>
+      <p><font size="3" face="Arial">&nbsp;</font></p>
+      <p><font size="1" face="Arial">Disclaimer:&nbsp; Daycounter, Inc. doesn't
+      guarantee the result or accuracy of this free calculator.&nbsp;</font>
+      </p><p><font size="3" face="Arial">&nbsp; </font>
+      
+</p><p align="center">
+<font size="1" face="Arial">
+	[<a href="http://www.daycounter.com/Employment.phtml">Employment</a>]
+      [<a href="http://www.daycounter.com/Downloads.phtml">Downloads</a>]
+	  [<a href="http://www.daycounter.com/Articles">Articles</a>] 
+      [<a href="http://www.daycounter.com/Contact.phtml">Contact Us</a>]
+</font>
+
+</p><p align="center">
+	<font size="2" color="#0000FF"><b><i>Salt Lake City, UT, USA</i></b></font>
+</p><p align="center">
+<font size="1">
+	<b>Disclaimer:</b> Daycounter, Inc. doesn't guarantee the accuracy of any of it's content. Use at your own risk. 
+	<br><br>
+	© Copyright 2016 Daycounter, Inc. All rights Reserved.
+</font>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-63981403-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+      </p></td>
+    <td valign="top">          
+    
+    	
+
+
+<div align="center">
+<br>
+<br>
+<br>
+<br>
+<br>
+<a href="http://www.vegetronix.com/Products/VH400">
+<img src="Steinhart-Hart%20Thermistor%20Calculator_files/Soil-Moisture-Sensor-Ad.png" alt="Soil Moisture Sensor Probe" border="0">
+</a>
+<br>
+<br>
+<br>
+<br>
+
+<script async="" src="Steinhart-Hart%20Thermistor%20Calculator_files/adsbygoogle.js"></script>
+<!-- Large Skyscraper -->
+<ins class="adsbygoogle" style="display:inline-block;width:300px;height:600px" data-ad-client="ca-pub-1155302517384345" data-ad-slot="8418175117"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+<br>
+<br>
+<br>
+
+
+
+<script async="" src="Steinhart-Hart%20Thermistor%20Calculator_files/adsbygoogle.js"></script>
+<!-- Large Skyscraper -->
+<ins class="adsbygoogle" style="display:inline-block;width:300px;height:600px" data-ad-client="ca-pub-1155302517384345" data-ad-slot="8418175117"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+		
+		</td>
+
+  </tr>
+</tbody></table>
+</body></html>
