@@ -1,7 +1,7 @@
 Protel Design System Design Rule Check
 PCB File : E:\Work\MercuryCell\PCB.PcbDoc
-Date     : Thu 15.06.17
-Time     : 19:26:11
+Date     : Sun 18.06.17
+Time     : 16:09:38
 
 Processing Rule : Clearance Constraint (Gap=0.15mm) (All),(All)
 Rule Violations :0
@@ -37,8 +37,8 @@ Processing Rule : Net Antennae (Tolerance=0mm) (All)
 Rule Violations :0
 
 Processing Rule : Room Schematic (Bounding Region = (25.4mm, 25.4mm, 44.323mm, 39.37mm) (InComponentClass('Schematic'))
-   Violation between Room Definition: Between Component CON1-CON? (13.731mm,9.079mm) on Bottom Layer And Room Schematic (Bounding Region = (25.4mm, 25.4mm, 44.323mm, 39.37mm) (InComponentClass('Schematic')) 
    Violation between Room Definition: Between SMT Small Component S1-S? (2.159mm,9.779mm) on Bottom Layer And Room Schematic (Bounding Region = (25.4mm, 25.4mm, 44.323mm, 39.37mm) (InComponentClass('Schematic')) 
+   Violation between Room Definition: Between Component CON1-CON? (13.731mm,9.079mm) on Bottom Layer And Room Schematic (Bounding Region = (25.4mm, 25.4mm, 44.323mm, 39.37mm) (InComponentClass('Schematic')) 
 Rule Violations :2
 
 Processing Rule : Height Constraint (Min=0mm) (Max=25.4mm) (Prefered=12.7mm) (All)
